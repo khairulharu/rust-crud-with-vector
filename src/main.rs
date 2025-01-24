@@ -1,19 +1,19 @@
-mod model;
-mod repository;
+#[derive(Debug)]
+struct Model {
+    pub code: String,
+    pub name: String,
+    pub description: String,
+    pub model: String,
+    pub tech: Tech,
+    pub status: String,
+}
+
+
+#[derive(Debug)]
+struct Tech {
+    pub name: Vec<String>,
+}
 
 fn main() {
-    let mut main_data: Vec<model::Model> = Vec::new();
-
-    main_data.push(model::Model{
-        code: "10",
-        name: "jalangkote",
-        description: "halo dek kerja atau kuliah".to_string(),
-        model: "food",
-        tech: model::Tech {
-            name: vec!["halo dek".to_string(), "halo banf".to_string()]
-        },
-        status: "active",
-    });
-
-    println!("{:?}", main_data);
+    todo!("implement new model repository and service repository");
 }
