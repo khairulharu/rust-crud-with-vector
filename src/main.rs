@@ -28,8 +28,18 @@ impl ModelRepository {
         self.data.push(request);
     }
 
-    fn read_by_code(&mut self, code: String) -> Result<Model, String> {
-        todo!("map the data self.data and serach data that same code if not found return String error")
+    fn read_by_code(&mut self, code: String) -> Result<&Model, String> {
+
+       let result = self.data.iter().find(|data| data.code == code);
+
+       match result {
+        Some(data) => {
+            Ok(data)
+        },
+        None => {
+            Err("Error Model Not Found".to_string())
+        },
+        }
     }
 }
 
@@ -54,10 +64,9 @@ fn test_model_repository() {
 
     assert!(!model_repository.data.is_empty());
 
-    let result = model_repository.data.iter().find(|data| data.code == "1234".to_string());
-
+    let result = model_repository.read_by_code("123".to_string());
     match result {
-        Some(data) => println!("{:?}", data),
-        None => println!("Not Found"),
+        Ok(data) => println!("{:?}", data),
+        Err(err) => println!("{}", err),
     };
 }
