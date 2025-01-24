@@ -29,16 +29,11 @@ impl ModelRepository {
     }
 
     fn read_by_code(&mut self, code: String) -> Result<&Model, String> {
+        let result = self.data.iter().find(|data| data.code == code);
 
-       let result = self.data.iter().find(|data| data.code == code);
-
-       match result {
-        Some(data) => {
-            Ok(data)
-        },
-        None => {
-            Err("Error Model Not Found".to_string())
-        },
+        match result {
+            Some(data) => Ok(data),
+            None => Err("Error Model Not Found".to_string()),
         }
     }
 }
@@ -54,7 +49,7 @@ fn test_model_repository() {
     model_repository.create(Model {
         code: "123".to_string(),
         name: "my_name".to_string(),
-        description: "this is a expression of your imagination".to_string(),
+        description: "this is result of your imagination".to_string(),
         model: "text".to_string(),
         tech: Tech {
             name: vec!["alloc".to_string(), "this is data".to_string()],
