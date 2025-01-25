@@ -24,6 +24,10 @@ impl ModelRepository {
         }
     }
 
+    fn read_all(&mut self) -> Vec<&Model> {
+        self.data.iter().map(|data| data).collect()
+    }
+
     fn create(&mut self, request: Model) {
         self.data.push(request);
     }
@@ -35,6 +39,14 @@ impl ModelRepository {
             Some(data) => Ok(data),
             None => Err("Error Model Not Found".to_string()),
         }
+    }
+
+    fn update(&mut self, code: String, model: Model) -> Result<String, String> {
+        todo!("implelemtn update request from service layer this method only update not validation or something like that, validate on service layer");
+    }
+
+    fn delete(&mut self, code: String) -> Result<String, String> {
+        todo!("delete model from give code")
     }
 }
 
@@ -64,4 +76,8 @@ fn test_model_repository() {
         Ok(data) => println!("{:?}", data),
         Err(err) => println!("{}", err),
     };
+
+    let all_models = model_repository.read_all();
+
+    assert_eq!(all_models.len(), 1);
 }
