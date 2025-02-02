@@ -1,6 +1,7 @@
 mod model;
 mod repository;
-
+mod server;
+mod status;
 
 fn main() {
     todo!("implement new model repository and service repository");
