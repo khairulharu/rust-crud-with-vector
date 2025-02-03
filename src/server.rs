@@ -33,11 +33,6 @@ fn handle_client(mut stream: TcpStream) {
                     r if r.starts_with("GET /models") => handle_get_all_models(r),
                     _ => (status::NOT_FOUND.to_string(), "404 not found".to_string())
                };
-<<<<<<< HEAD
-
-               stream.write
-=======
->>>>>>> feat/server-listener
           },
           Err(err) => {
                println!("Error: {}", err);
