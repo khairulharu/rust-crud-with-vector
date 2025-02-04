@@ -3,6 +3,8 @@ mod repository;
 mod server;
 mod status;
 
+mod tests;
+
 fn main() {
     todo!("implement new model repository and service repository");
 }
