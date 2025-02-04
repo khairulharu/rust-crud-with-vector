@@ -53,3 +53,39 @@ impl ModelRepository {
           }
      }
 }
+
+#[test]
+fn test_model_repository() {
+     let mut model_repository: ModelRepository = ModelRepository::new();
+
+     let model_test: Model = Model {
+          code: String::from("huxUsndsHdhfd"),
+          name: String::from("Car"),
+          description: String::from("another car that stolen from neightberhod, that on repair, so the car should be cannt run"),
+          model: String::from("axdv"),
+          tech: crate::model::Tech {
+               name: vec!["vw".to_string(), "bmw".to_string()],
+          },
+          status: String::from("activated"),
+     };
+
+     model_repository.create(model_test.clone());
+
+     let all_models = model_repository.read_all();
+
+     assert_eq!(all_models.len(), 1);
+
+     let result= model_repository.read_by_code(model_test.clone().code.as_str()).unwrap();
+
+     assert_eq!(result.code, model_test.code);
+
+     model_repository.create(model_test.clone());
+
+     let all_models = model_repository.read_all();
+     assert_eq!(all_models.len(), 2);
+
+     //as this later on
+     model_repository.create(model_test.clone());
+
+     assert_eq!(all_models.len(), 3);
+}
