@@ -8,6 +8,8 @@ const SERVER_ADDRESS: &str = "127.0.0.1:8080";
 pub fn start_server() {
      let listener = TcpListener::bind(SERVER_ADDRESS).unwrap();
 
+     println!("SERVER START RUN AT {}", SERVER_ADDRESS);
+
      for stream in listener.incoming() {
 
           match stream { 
@@ -33,6 +35,8 @@ fn handle_client(mut stream: TcpStream) {
                     r if r.starts_with("GET /models") => handle_get_all_models(r),
                     _ => (status::NOT_FOUND.to_string(), "404 not found".to_string())
                };
+
+               stream.write_all(format!("{}{}", status_line, content).as_bytes()).unwrap();
           },
           Err(err) => {
                println!("Error: {}", err);

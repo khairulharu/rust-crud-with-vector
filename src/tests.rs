@@ -16,6 +16,4 @@ fn test_model_repository() {
         },
         status: todo!(),
     };
-
-     model_repository.create();
 }
