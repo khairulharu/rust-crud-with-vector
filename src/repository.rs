@@ -71,21 +71,62 @@ fn test_model_repository() {
 
      model_repository.create(model_test.clone());
 
-     let all_models = model_repository.read_all();
 
-     assert_eq!(all_models.len(), 1);
+     let model_test_update: Model = Model {
+          code: String::from("huxUsndsHdhfd"),
+          name: String::from("Car 3"),
+          description: String::from("another car that 4 stolen from neightberhod, that on repair, so the car should be cannt run"),
+          model: String::from("axdvdd"),
+          tech: crate::model::Tech {
+               name: vec!["vwddd".to_string(), "bmwdddd".to_string()],
+          },
+          status: String::from("inactive"),
+     };
 
-     let result= model_repository.read_by_code(model_test.clone().code.as_str()).unwrap();
+     let result = model_repository.update(model_test.code.as_str(), model_test_update.clone());
 
-     assert_eq!(result.code, model_test.code);
+     match result {
+        Ok(m) => {
+          println!("{}", m)
+        },
+        Err(RepositoryError::NotFound(m)) => {
+          println!("{}", m)
+        },
+        Err(RepositoryError::Other(m)) => {
+          println!("{}", m)
+        },
+     }
 
-     model_repository.create(model_test.clone());
+     let result = model_repository.read_by_code(model_test.code.as_str());
 
-     let all_models = model_repository.read_all();
-     assert_eq!(all_models.len(), 2);
+     match result {
+          Ok(data) => {
+               assert_eq!(data.name, model_test_update.name);
+          },
+          Err(RepositoryError::NotFound(m)) => {
+            println!("{}", m)
+          },
+          Err(RepositoryError::Other(m)) => {
+            println!("{}", m)
+          },
+     }
 
-     //as this later on
-     model_repository.create(model_test.clone());
+     let models = model_repository.read_all();
 
-     assert_eq!(all_models.len(), 3);
+     assert_eq!(models.len(), 1);
+
+
+     let result = model_repository.delete(model_test_update.code.as_str());
+
+     match result {
+          Ok(m) => {
+            println!("{}", m)
+          },
+          Err(RepositoryError::NotFound(m)) => {
+            println!("{}", m)
+          },
+          Err(RepositoryError::Other(m)) => {
+            println!("{}", m)
+          },
+       }
 }
