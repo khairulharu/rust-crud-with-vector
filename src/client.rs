@@ -1,27 +1,7 @@
-use std::net::{TcpListener, TcpStream};
+use std::net::TcpStream;
 use std::io::{Read, Write};
 
 use crate::status;
-
-const SERVER_ADDRESS: &str = "127.0.0.1:8080";
-
-pub fn start_server() {
-     let listener = TcpListener::bind(SERVER_ADDRESS).unwrap();
-
-     println!("SERVER START RUN AT {}", SERVER_ADDRESS);
-
-     for stream in listener.incoming() {
-
-          match stream { 
-               Ok(stream) => {
-                    handle_client(stream);
-               },
-               Err(err) => {
-                    println!("Error: {}", err)
-               },
-          }
-     }
-}
 
 fn handle_client(mut stream: TcpStream) {
      let mut buffer = [0; 1024];
